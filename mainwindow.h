@@ -14,8 +14,13 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    bool isANumber(QString string);
+
+private slots:
+    void on_loadFile_clicked();
 
 private:
     Ui::MainWindow *ui;
+    QVector<double> qv_x_file, qv_y_file;
 };
 #endif // MAINWINDOW_H
