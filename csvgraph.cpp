@@ -29,13 +29,12 @@ void CsvGraph::LoadCsvFile()
     if(!file.open(QFile::ReadOnly | QFile::Text)) {
         QMessageBox::warning(NULL, "title", "file not open");
     }
-
     QTextStream in(&file);
     while(!in.atEnd()) {
         QString mText = in.readLine();
         QStringList splitString = mText.split(",");
         QString xVal = splitString.first();
-        QString yVal = splitString.last();
+        QString yVal = splitString.last() == "" ? "0" : splitString.last();
         if(isANumber(xVal) && isANumber(yVal)) {
             qv_x_file.append(xVal.toDouble());
             qv_y_file.append(yVal.toDouble());

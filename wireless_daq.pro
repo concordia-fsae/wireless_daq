@@ -12,7 +12,7 @@ SOURCES += \
     csvgraph.cpp \
     main.cpp \
     mainwindow.cpp \
-    qcustomplot.cpp
+    qcustomplot.cpp \
     socketconnection.cpp
 
 HEADERS += \
