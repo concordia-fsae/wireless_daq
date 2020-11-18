@@ -1,9 +1,7 @@
 #include "socketconnection.h"
 
 SocketConnection::SocketConnection(QObject *parent) : QObject(parent)
-{
-
-}
+{}
 
 // Sets up the connection with the TCP server
 void SocketConnection::Connect()
@@ -25,6 +23,7 @@ void SocketConnection::Connect()
 void SocketConnection::connected()
 {
     qDebug() << "Connected";
+    emit newMessageFromServer("connected");
 }
 
 // When the socket is disconnected from the TCP serve, this method will be called
@@ -37,5 +36,8 @@ void SocketConnection::disconnected()
 void SocketConnection::readyRead()
 {
     qDebug() << "Reading...";
-    qDebug() << socket->readAll();
+    QString messages = QString(socket->readAll());
+    qDebug() << messages;
+    emit newMessageFromServer(messages);
 }
+

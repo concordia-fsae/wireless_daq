@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include "csvgraph.h"
+#include "livedatagraph.h"
+#include "socketconnection.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
