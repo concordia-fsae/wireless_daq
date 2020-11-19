@@ -24,5 +24,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     CsvGraph csv_plot;
+    LiveDataGraph * live_data;
 };
 #endif // MAINWINDOW_H

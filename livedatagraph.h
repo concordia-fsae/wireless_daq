@@ -1,19 +1,24 @@
 #ifndef LIVEDATAGRAPH_H
 #define LIVEDATAGRAPH_H
 #include "qcustomplot.h"
+#include <QObject>
 
-class LiveDataGraph
+class LiveDataGraph : public QObject
 {
+    Q_OBJECT
 public:
-    LiveDataGraph();
-    LiveDataGraph(QCustomPlot * graph);
+    explicit LiveDataGraph(QCustomPlot * graph, QObject *parent = nullptr);
 
 private:
+    bool isANumber(QString string);
     QCustomPlot * graph;
     QVector<double> qv_x_file, qv_y_file;
+    void addValueToGraph(double xVal, double yVal);
+
+signals:
 
 public slots:
-    void newDataHandler(double timeVal, double yVal);
+    void handleNewMessageFromServer(QString message);
 
 };
 
