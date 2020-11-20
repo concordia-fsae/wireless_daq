@@ -19,6 +19,9 @@
      <widget class="QCustomPlot" name="excelPlot" native="true"/>
     </item>
     <item>
+     <widget class="QCustomPlot" name="livePlot" native="true"/>
+    </item>
+    <item>
      <widget class="QPushButton" name="loadFile">
       <property name="text">
        <string>Load File</string>
@@ -33,7 +36,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>24</height>
     </rect>
    </property>
   </widget>

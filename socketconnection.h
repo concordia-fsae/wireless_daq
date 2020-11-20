@@ -14,12 +14,13 @@ public:
     void Connect();
     void GetMessages();
 
-signals:
-
 public slots:
     void connected();
     void disconnected();
     void readyRead();
+
+signals:
+    void newMessageFromServer(QString message);
 
 private:
     QTcpSocket *socket;

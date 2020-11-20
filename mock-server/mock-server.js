@@ -9,7 +9,7 @@ const server = net.createServer((socket) => {
     })
 
     socket.write('[SERVER]: Hello, you are now connected to the TCP server');
-    interval = setInterval(()=>intervalFunction(socket), 1000);
+    interval = setInterval(()=>intervalFunction(socket), 100);
 
     // gets called when a client disconnects
     socket.on('close', () =>{
@@ -38,8 +38,8 @@ server.listen(9898, () => {
 
 // is the function that gets called every second and returns it to the client
 function intervalFunction(socket) {
-    count++;
-    socket.write(count+"," + (Math.random()*100).toFixed(2));
+    count += 0.1;
+    socket.write(count+"," + (Math.sin(count)).toFixed(2));
 }
 
 function closeInterval() {

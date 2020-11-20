@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include "csvgraph.h"
+#include "livedatagraph.h"
+#include "socketconnection.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,5 +24,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     CsvGraph csv_plot;
+    LiveDataGraph * live_data;
 };
 #endif // MAINWINDOW_H
