@@ -3,21 +3,24 @@
 #include <QTextStream>
 #include <QFileDialog>
 #include <QDir>
-#include <QDebug>
 #include <QMessageBox>
 
-CsvGraph::CsvGraph()
-{}
-
-CsvGraph::CsvGraph(QCustomPlot * graph)
+CsvGraph::CsvGraph(QObject *parent) : QObject(parent)
 {
-    this->graph = graph;
+    this->graph = new QCustomPlot;
+    QCPTextElement *graphTitle = new QCPTextElement(this->graph, "Static Graph", QFont("sans", 17, QFont::Bold));
+    this->graph->plotLayout()->insertRow(0);
+    this->graph->plotLayout()->addElement(0, 0, graphTitle);
     this->graph->addGraph();
     this->graph->graph(0)->setScatterStyle(QCPScatterStyle::ssCircle);
     this->graph->graph(0)->rescaleAxes();
     this->graph->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectPlottables);
     this->graph->xAxis->setRange(0.0, 50);
     this->graph->yAxis->setRangeLower(0.0);
+    this->loadFileButton = new QPushButton("Load File");
+    this->removeGraphButton = new QPushButton("Remove Graph");
+    QObject::connect(this->loadFileButton, SIGNAL(clicked()), this, SLOT(LoadCsvFile()));
+    QObject::connect(this->removeGraphButton, SIGNAL(clicked()), this, SLOT(deleteGraph()));
 }
 
 void CsvGraph::LoadCsvFile()
@@ -48,6 +51,23 @@ void CsvGraph::LoadCsvFile()
     this->graph->yAxis->rescale(true);
     this->graph->replot();
     this->graph->update();
+}
+
+QVBoxLayout * CsvGraph::getGraphWidgetLayout()
+{
+    QVBoxLayout * vLayout = new QVBoxLayout;
+    QHBoxLayout * buttonsLayout = new QHBoxLayout();
+    buttonsLayout->addWidget(this->loadFileButton);
+    buttonsLayout->addWidget(this->removeGraphButton);
+    vLayout->addWidget(this->graph);
+    vLayout->addLayout(buttonsLayout);
+    return vLayout;
+}
+
+void CsvGraph::deleteGraph()
+{
+    this->deleteLater();
+    emit removeGraphFromLayout(this->getGraphWidgetLayout());
 }
 
 bool CsvGraph::isANumber(QString string)

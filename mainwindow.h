@@ -19,11 +19,14 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_loadFile_clicked();
+    void on_add_live_graph_clicked();
+    void on_add_static_graph_clicked();
+    void removeGraphFromLayout(QLayoutItem * layoutToRemove);
 
 private:
     Ui::MainWindow *ui;
-    CsvGraph csv_plot;
-    LiveDataGraph * live_data;
+    QVBoxLayout *mainLayout;
+    SocketConnection * socket;
+    void updateUI();
 };
 #endif // MAINWINDOW_H
