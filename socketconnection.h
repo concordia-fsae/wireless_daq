@@ -1,6 +1,7 @@
 #ifndef SOCKETCONNECTION_H
 #define SOCKETCONNECTION_H
 
+#include "graphdatapoint.h"
 #include <QObject>
 #include <QTcpSocket>
 #include <QDebug>
@@ -13,6 +14,8 @@ public:
     explicit SocketConnection(QObject *parent = nullptr);
     void Connect();
     void GetMessages();
+    QVector<GraphDataPoint> GetAllServerData();
+    GraphDataPoint GetInitialDataPoint();
 
 public slots:
     void connected();
@@ -21,9 +24,11 @@ public slots:
 
 signals:
     void newMessageFromServer(QString message);
+    void newGraphPointFromServer(GraphDataPoint newDataPoint);
 
 private:
     QTcpSocket *socket;
+    QVector<GraphDataPoint> serverData;
 
 };
 
