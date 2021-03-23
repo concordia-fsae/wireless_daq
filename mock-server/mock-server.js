@@ -2,6 +2,16 @@ const net = require('net');
 let count = 0;
 let interval;
 
+function createMockBinaryBytes(length) {
+    let returnString = "";
+    for(let i = 0; i < length; i++ ) {
+        for(let j = 0; j < 8; j++){
+            returnString += Math.round(Math.random()); //return random 0 or 1
+        }
+    }
+    return returnString;
+}
+
 // creates the TCP server
 const server = net.createServer((socket) => {
     socket.on('data', (data) =>{
@@ -9,7 +19,7 @@ const server = net.createServer((socket) => {
     })
 
     socket.write('[SERVER]: Hello, you are now connected to the TCP server');
-    interval = setInterval(()=>intervalFunction(socket), 100);
+    interval = setInterval(()=>intervalFunction(socket), 1000);
 
     // gets called when a client disconnects
     socket.on('close', () =>{
@@ -38,8 +48,7 @@ server.listen(9898, () => {
 
 // is the function that gets called every second and returns it to the client
 function intervalFunction(socket) {
-    count += 0.1;
-    socket.write(count+"," + (Math.sin(count)).toFixed(2));
+    socket.write(createMockBinaryBytes(8));
 }
 
 function closeInterval() {
@@ -47,4 +56,3 @@ function closeInterval() {
         clearInterval(interval);
     }
 }
-

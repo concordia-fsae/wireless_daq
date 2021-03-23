@@ -10,6 +10,7 @@ CONFIG += sdk_no_version_check c++11
 
 SOURCES += \
     csvgraph.cpp \
+    graphdatapoint.cpp \
     livedatagraph.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
 
 HEADERS += \
     csvgraph.h \
+    graphdatapoint.h \
     livedatagraph.h \
     mainwindow.h \
     qcustomplot.h \
