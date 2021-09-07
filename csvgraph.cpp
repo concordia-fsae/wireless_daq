@@ -5,8 +5,17 @@
 #include <QDir>
 #include <QMessageBox>
 
+/*!
+ * \brief CsvGraph::CsvGraph
+ * \param parent
+ * \class CsvGraph
+ *
+ * Takes a csv file and plots it on a graph
+ * Sample csv format: [Time, Speed]
+ */
 CsvGraph::CsvGraph(QObject *parent) : QObject(parent)
 {
+    // Handles the UI elements of the CSVGraph
     this->graph = new QCustomPlot;
     QCPTextElement *graphTitle = new QCPTextElement(this->graph, "Static Graph", QFont("sans", 17, QFont::Bold));
     this->graph->plotLayout()->insertRow(0);
@@ -19,10 +28,21 @@ CsvGraph::CsvGraph(QObject *parent) : QObject(parent)
     this->graph->yAxis->setRangeLower(0.0);
     this->loadFileButton = new QPushButton("Load File");
     this->removeGraphButton = new QPushButton("Remove Graph");
+
+    // --- Event Listeners ---
+
+    // Listens when the 'load file' button is clicked and triggers a method
     QObject::connect(this->loadFileButton, SIGNAL(clicked()), this, SLOT(LoadCsvFile()));
+
+    // Listens when the 'remove graph' button is clicked and the deleteGraph method is called
     QObject::connect(this->removeGraphButton, SIGNAL(clicked()), this, SLOT(deleteGraph()));
 }
 
+/*!
+ * \brief CsvGraph::LoadCsvFile
+ *
+ * Opens and reads a csv file and updates the graph UI with it's data
+ */
 void CsvGraph::LoadCsvFile()
 {
     QVector<double> qv_x_file, qv_y_file;
@@ -46,6 +66,8 @@ void CsvGraph::LoadCsvFile()
             this->graph->yAxis->setLabel(yVal);
         }
     }
+
+    // Sets the all the data into the graph and updates it
     this->graph->graph(0)->setData(qv_x_file, qv_y_file);
     this->graph->xAxis->rescale(true);
     this->graph->yAxis->rescale(true);
@@ -53,6 +75,12 @@ void CsvGraph::LoadCsvFile()
     this->graph->update();
 }
 
+/*!
+ * \brief CsvGraph::getGraphWidgetLayout
+ * \return
+ *
+ * Gets the CsvGraph UI ready for display
+ */
 QVBoxLayout * CsvGraph::getGraphWidgetLayout()
 {
     QVBoxLayout * vLayout = new QVBoxLayout;
